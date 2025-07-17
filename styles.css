@@ -1,5 +1,144 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+}
+
+nav {
+  background: #222;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.nav-btn:hover {
+  background: #555;
+}
+
+.nav-btn.active {
+  background: #007bff;
+}
+
+#loading {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fade {
+  transition: opacity 0.4s ease;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
 .section-title {
     font-size: 18px;
     font-weight: bold;
     margin: 8px 0;
+}
+
+.flashcard {
+  background: white;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.flashcard {
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: white;
+  padding: 15px;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  background: #f0f0f0;
+}
+
+body.dark-mode {
+  background: #121212;
+  color: #eee;
+}
+
+body.dark-mode nav {
+  background: #1e1e1e;
+}
+
+body.dark-mode .nav-btn {
+  background: #333;
+  color: #eee;
+}
+
+body.dark-mode .nav-btn.active {
+  background: #4a90e2;
+}
+
+body.dark-mode .flashcard-inner {
+  background: #222;
+  color: #ddd;
+  box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .flashcard-back {
+  background: #333;
+}
+
+body.dark-mode #loading {
+  color: #eee;
 }

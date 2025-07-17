@@ -5,17 +5,35 @@
     <meta charset="UTF-8" />
     <title>Learn How To Code</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
     <nav>
-        <button onclick="loadPage('home.html')">Home</button>
-        <button onclick="loadPage('flashcards.html')">Flashcards</button>
-        <button onclick="showPage('team')">Get to know us</button>
-        <button onclick="loadPage('about.html')">About</button>
+        <button class="nav-btn" onclick="loadPage('home.html', this)">
+            <i class="fas fa-house"></i> Home
+        </button>
+        <button class="nav-btn" onclick="loadPage('flashcards.html', this)">
+            <i class="fas fa-clone"></i> Flashcards
+        </button>
+        <button class="nav-btn" onclick="loadPage('team.html', this)">
+            <i class="fas fa-users"></i> Get to know us
+        </button>
+        <button class="nav-btn" onclick="loadPage('about.html', this)">
+            <i class="fas fa-info-circle"></i> About
+        </button>
+        <button id="darkModeToggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i> Dark Mode
+        </button>
     </nav>
 
-    <div id="content">
+    <div id="loading">
+        <div class="spinner"></div>
+        <h1>Loading...</h1>
+        <p>Please wait while we load the content.</p>
+    </div>
+
+    <div id="content" class="fade">
         <!-- Loaded content will go here -->
     </div>
 
