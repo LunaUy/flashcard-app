@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Flashcards</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+    <nav>
+        <button onclick="location.href='flashcards.html'" class="nav-btn">Back to Flashcards</button>
+    </nav>
+
+    <main style="padding:20px; max-width:600px; margin:auto;">
+        <h2>Create Flashcards</h2>
+
+        <form id="flashcardForm">
+            <label>
+                Question:<br />
+                <textarea id="questionInput" rows="3" required style="width:100%;"></textarea>
+            </label>
+            <br /><br />
+            <label>
+                Answer:<br />
+                <textarea id="answerInput" rows="3" required style="width:100%;"></textarea>
+            </label>
+            <br /><br />
+            <button type="submit" class="nav-btn">Add Flashcard</button>
+        </form>
+
+        <h3 style="margin-top:30px;">Preview</h3>
+        <div id="previewContainer"></div>
+    </main>
+
+    <script>
+        const form = document.getElementById("flashcardForm");
+        const preview = document.getElementById("previewContainer");
+
+        let createdFlashcards = JSON.parse(localStorage.getItem("createdFlashcards") || "[]");
+
+        function renderPreview() {
+            preview.innerHTML = "";
+            createdFlashcards.forEach(({ question, answer }, i) => {
+                const card = document.createElement("div");
+                card.className = "flashcard";
+                card.style.marginBottom = "10px";
+                card.innerHTML = `
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><p><strong>Q:</strong> ${question}</p></div>
+            <div class="flashcard-back"><p><strong>A:</strong> ${answer}</p></div>
+          </div>
+        `;
+                preview.appendChild(card);
+            });
+        }
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const question = document.getElementById("questionInput").value.trim();
+            const answer = document.getElementById("answerInput").value.trim();
+            if (!question || !answer) return alert("Please fill in both fields.");
+
+            createdFlashcards.push({ question, answer });
+            localStorage.setItem("createdFlashcards", JSON.stringify(createdFlashcards));
+
+            form.reset();
+            renderPreview();
+            alert("Flashcard added!");
+        });
+
+        renderPreview();
+    </script>
+    <script src="main.js"></script>
+    <script src="template-loader.js"></script>
+</body>
+
+</html>

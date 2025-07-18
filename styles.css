@@ -1,116 +1,147 @@
+/* ========== GENERAL VINTAGE BASE ========== */
 body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f4f4f4;
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    background: #fdf6e3;
 }
 
+/* ========== NAVIGATION (TEMPLATE-LOADED) ========== */
 nav {
-  background: #222;
-  padding: 10px;
+  background: #b59e6a;
+  border-bottom: 2px solid #7a6243;
+  padding: 10px 15px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  justify-content: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  position: relative;
+  top: 0;
 }
 
 .nav-btn {
-  background: #444;
-  color: white;
-  border: none;
-  padding: 10px 15px;
+  background: #e6d5a8;
+  color: #5b4636;
+  border: 1px solid #7a6243;
+  padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-family: inherit;
+  font-size: 12px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  text-decoration: none;
 }
 
-.nav-btn:hover {
-  background: #555;
+.nav-btn:hover,
+.nav-btn:focus {
+  background: #7a6243;
+  color: #fdf6e3;
+  transform: scale(1.03);
+  outline: none;
 }
 
 .nav-btn.active {
-  background: #007bff;
+  background: #a68440;
+  color: #fdf6e3;
+  border-color: #5b4636;
 }
 
+/* ========== LOADING SPINNER ========== */
 #loading {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 30px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+    color: #7a6243;
 }
 
 .spinner {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #007bff;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 10px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #7c5e3c;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .fade {
-  transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease;
 }
 
 .fade-in {
-  opacity: 1;
+    opacity: 1;
 }
 
+/* ========== TITLES ========== */
 .section-title {
     font-size: 18px;
     font-weight: bold;
     margin: 8px 0;
 }
 
+/* ========== FLASHCARDS ========== */
 .flashcard {
-  background: white;
-  border: 1px solid #ccc;
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.flashcard {
-  perspective: 1000px;
-  cursor: pointer;
+    background: #fff8dc;
+    border: 1px solid #d9cba3;
+    margin: 10px 10px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(58, 47, 27, 0.2);
+    perspective: 1000px;
+    cursor: pointer;
+    width: auto
 }
 
 .flashcard-inner {
-  position: relative;
-  width: 100%;
-  min-height: 120px;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  background: white;
-  padding: 15px;
+    position: relative;
+    width: auto;
+    min-height: 120px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(58, 47, 27, 0.2);
+    padding: 15px;
 }
 
 .flashcard.flipped .flashcard-inner {
-  transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 .flashcard-front,
 .flashcard-back {
-  position: absolute;
-  width: 100%;
-  backface-visibility: hidden;
-  top: 0;
-  left: 0;
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
 }
 
 .flashcard-back {
-  transform: rotateY(180deg);
-  background: #f0f0f0;
+    background: #fff8dc;
+    transform: rotateY(180deg);
 }
 
+button:focus {
+    outline: 2px solid #053874;
+    outline-offset: 2px;
+}
+
+/* ========== DARK MODE ========== */
 body.dark-mode {
   background: #121212;
   color: #eee;
@@ -126,19 +157,74 @@ body.dark-mode .nav-btn {
 }
 
 body.dark-mode .nav-btn.active {
-  background: #4a90e2;
+  background: #03254d;
+}
+
+body.dark-mode .flashcard {
+  background: #222;
+  border: 0px;
 }
 
 body.dark-mode .flashcard-inner {
   background: #222;
   color: #ddd;
-  box-shadow: 0 2px 5px rgba(255,255,255,0.1);
 }
 
 body.dark-mode .flashcard-back {
-  background: #333;
+  background: #222;
 }
 
 body.dark-mode #loading {
   color: #eee;
+}
+
+/* COLLAPSIBLE MENU */
+#menu-toggle {
+  display: none;
+}
+
+/* Responsive hamburger nav */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f4e2d8;
+  padding: 10px 20px;
+  border-bottom: 2px solid #c6a969;
+}
+
+.nav-links {
+  display: flex;
+  gap: 10px;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #f4e2d8;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .flashcard {
+    width: auto;
+  }
 }

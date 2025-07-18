@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flashcards Quiz Mode</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+    <nav>
+        <button onclick="location.href='flashcards.html'" class="nav-btn">Back to Flashcards</button>
+    </nav>
+
+    <main style="padding:20px; max-width:600px; margin:auto;">
+        <h2>Quiz Mode</h2>
+        <div id="quizContainer"></div>
+        <button id="nextBtn" class="nav-btn" style="display:none;">Next</button>
+        <p id="score" style="margin-top: 20px;"></p>
+    </main>
+
+    <script>
+        let flashcards = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        const quizContainer = document.getElementById("quizContainer");
+        const nextBtn = document.getElementById("nextBtn");
+        const scoreDisplay = document.getElementById("score");
+
+        // Load both original and created flashcards
+        async function loadAllFlashcards() {
+            try {
+                const response = await fetch("flashcards.json");
+                const data = await response.json();
+                const userCards = JSON.parse(localStorage.getItem("createdFlashcards") || "[]");
+                flashcards = [...data, ...userCards];
+                showQuestion();
+            } catch {
+                quizContainer.innerHTML = "<p>Failed to load flashcards.</p>";
+            }
+        }
+
+        function showQuestion() {
+            answered = false;
+            nextBtn.style.display = "none";
+            scoreDisplay.textContent = `Score: ${score} / ${flashcards.length}`;
+
+            if (currentIndex >= flashcards.length) {
+                quizContainer.innerHTML = `<h3>Quiz completed!</h3><p>Your final score is ${score} out of ${flashcards.length}.</p>`;
+                nextBtn.textContent = "Restart Quiz";
+                nextBtn.style.display = "inline-block";
+                return;
+            }
+
+            const card = flashcards[currentIndex];
+            quizContainer.innerHTML = `
+        <div>
+          <p><strong>Q:</strong> ${card.question}</p>
+          <input type="text" id="answerInput" placeholder="Type your answer here" style="width:100%; padding:8px; margin-top:10px;" />
+          <button id="submitAnswerBtn" class="nav-btn" style="margin-top:10px;">Submit</button>
+          <p id="feedback" style="margin-top:10px; font-weight:bold;"></p>
+        </div>
+      `;
+
+            document.getElementById("submitAnswerBtn").addEventListener("click", checkAnswer);
+        }
+
+        function checkAnswer() {
+            if (answered) return;
+
+            const userAnswer = document.getElementById("answerInput").value.trim().toLowerCase();
+            const correctAnswer = flashcards[currentIndex].answer.toLowerCase();
+
+            const feedback = document.getElementById("feedback");
+
+            if (!userAnswer) {
+                feedback.textContent = "Please enter an answer.";
+                return;
+            }
+
+            answered = true;
+
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = "Correct! 🎉";
+                score++;
+                // (Later) Play correct sound here
+            } else {
+                feedback.textContent = `Wrong! Correct answer: ${flashcards[currentIndex].answer}`;
+                // (Later) Play wrong sound here
+            }
+
+            nextBtn.style.display = "inline-block";
+        }
+
+        nextBtn.addEventListener("click", () => {
+            if (currentIndex >= flashcards.length) {
+                currentIndex = 0;
+                score = 0;
+            } else {
+                currentIndex++;
+            }
+            showQuestion();
+        });
+
+        window.onload = loadAllFlashcards;
+    </script>
+    <script src="main.js"></script>
+    <script src="template-loader.js"></script>
+</body>
+
+</html>
